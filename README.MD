@@ -1,4 +1,4 @@
-# 🏠 Sistema de Gestión de Propiedades y Alquileres (Propix)
+# 🏠 Sistema de Gestión de Propiedades y Alquileres 
 
 ## 📋 Descripción
 
