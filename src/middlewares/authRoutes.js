@@ -7,4 +7,4 @@ const authRoutes = Router();
 authRoutes.post('/register', validateDto, register);
 authRoutes.post('/login', validateDto, login);
 
-export default router;
+export default authRoutes;

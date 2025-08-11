@@ -26,6 +26,13 @@ export class UserService {
     return await this.userRepository.findOneBy({ id });
   }
 
+  async getPropiedadsByUserId(userId) {
+    return await this.userRepository.find({
+      where: { id: userId },
+      relations: ['propiedades']
+    });
+  }
+
   async updateUser(id, data) {
     if (data.contraseña) {
       data.contraseña = await bcrypt.hash(data.contraseña, 10);

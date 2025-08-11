@@ -32,6 +32,16 @@ export class UserController {
         }
     }
 
+    async getPropiedadesByUserId(req, res) {
+        try {
+            const propiedades = await userService.getPropiedadsByUserId(parseInt(req.params.id));
+            if (!propiedades) return res.status(404).json({ message: 'Usuario no encontrado o sin propiedades' });
+            res.json(propiedades);
+        } catch (error) {
+            res.status(500).json({ message: 'Error al obtener las propiedades del usuario' });
+        }
+    }
+
     async update(req, res) {
         try {
             const updatedUser = await userService.updateUser(parseInt(req.params.id), req.body);
