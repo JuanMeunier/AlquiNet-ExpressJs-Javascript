@@ -1,5 +1,5 @@
 import { AppDataSource } from '../config/database.js';
-import { Usuario } from '../entities/usuario.js';
+import Usuario from '../entities/usuario.js';
 import bcrypt from 'bcrypt';
 
 export class UserService {

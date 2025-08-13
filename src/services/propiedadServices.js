@@ -1,12 +1,12 @@
 import AppDataSource from '../config/database.js';
-import { Propiedad } from '../entities/propiedad.js';
-import { User } from '../entities/usuario.js';
+import Propiedad from '../entities/propiedad.js';
+import Usuario from '../entities/usuario.js';
 import { NotFoundError } from '../errors/NotFoundError.js';
 
 export class PropiedadService {
     constructor() {
         this.propiedadRepository = AppDataSource.getRepository(Propiedad);
-        this.userRepository = AppDataSource.getRepository(User);
+        this.userRepository = AppDataSource.getRepository(Usuario);
     }
 
     async createPropiedad(data) {

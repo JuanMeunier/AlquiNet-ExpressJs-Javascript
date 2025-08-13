@@ -1,14 +1,25 @@
 import express from 'express';
 import router from './routes/index.routes.js';
 import userRouter from './routes/userRoutes.js';
+import propiedadRouter from './routes/propiedadRoutes.js';
+import reservaRouter from './routes/reservaRoutes.js';
+import reseniaRouter from './routes/reseniaRoutes.js';
 import authRoutes from './middlewares/authRoutes.js';
 
 
 const app = express();
 
+
+// Middlewares globales
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Rutas
 app.use('/', router);
 app.use('/users', userRouter);
+app.use('/api/propiedades', propiedadRouter);
+app.use('/api/reservas', reservaRouter);
+app.use('/api/resenias', reseniaRouter);
 app.use('/auth', authRoutes);
 
 // Middlewares de Errores Globales

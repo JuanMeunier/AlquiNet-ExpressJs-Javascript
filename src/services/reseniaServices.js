@@ -1,7 +1,7 @@
 import AppDataSource from '../config/database.js';
-import { Propiedad } from '../entities/propiedad.js';
-import { Usuario } from '../entities/usuario.js';
-import { Resenia } from '../entities/resenia.js';
+import Propiedad from '../entities/propiedad.js';
+import Usuario from '../entities/usuario.js';
+import Resenia from '../entities/resenia.js';
 import { NotFoundError } from '../errors/NotFoundError.js'
 
 export class ReseniaService {

@@ -2,7 +2,8 @@ import { Router } from 'express';
 import { ReseniaController } from '../controllers/reseniaController.js';
 import { authenticate } from '../middlewares/auth.middleware.js';
 import { validateDto } from '../middlewares/validateDto.js';
-import { createReseniaDto, updateReseniaDto } from '../dtos/resenia.dto.js';
+import { createReseniaDto } from '../dtos/resenia/createResenia.dto.js';
+import { updateReseniaDto } from '../dtos/resenia/updateResenia.dto.js';
 
 const router = Router();
 const reseniaController = new ReseniaController();
