@@ -25,7 +25,7 @@ El sistema cuenta con:
 - ⭐ Sistema de reseñas y puntuaciones para propiedades.  
 - 📊 Dashboard administrativo para gestión y monitoreo.  
 - 🛠️ Cacheo de datos con Redis para mejorar rendimiento.  
-- 🔐 Protección de rutas con guards y decoradores personalizados.  
+- 🔐 Protección de rutas 
 - 📖 Documentación interactiva y actualizada con Swagger UI.
 
 ---

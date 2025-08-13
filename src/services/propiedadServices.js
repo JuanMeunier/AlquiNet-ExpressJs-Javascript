@@ -1,4 +1,4 @@
-import AppDataSource from '../config/data-source.js';
+import AppDataSource from '../config/database.js';
 import { Propiedad } from '../entities/Propiedad.js';
 import { User } from '../entities/User.js';
 import { NotFoundError } from '../errors/NotFoundError.js';
