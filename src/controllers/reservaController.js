@@ -1,38 +1,26 @@
-
 import { ReservaService } from '../services/reservaServices.js';
 
-const reservaService = new ReservaService();
-
 export class ReservaController {
-    async create(req, res) {
+    constructor() {
+        this.reservaService = new ReservaService();
+    }
+
+    async create(req, res, next) {
         try {
-            const reserva = await reservaService.createReserva(req.body);
+            const reserva = await this.reservaService.createReserva(req.body);
             res.status(201).json({
                 success: true,
                 message: 'Reserva creada exitosamente',
                 data: reserva
             });
         } catch (error) {
-            console.error('Error al crear reserva:', error);
-
-            if (error.message.includes('no encontrado')) {
-                return res.status(404).json({
-                    success: false,
-                    message: error.message
-                });
-            }
-
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor al crear la reserva'
-            });
+            next(error);
         }
     }
 
-    async findAll(req, res) {
+    async findAll(req, res, next) {
         try {
-            const reservas = await reservaService.getReservas();
-
+            const reservas = await this.reservaService.getReservas();
             res.json({
                 success: true,
                 message: 'Reservas obtenidas exitosamente',
@@ -40,62 +28,32 @@ export class ReservaController {
                 data: reservas
             });
         } catch (error) {
-            console.error('Error al obtener reservas:', error);
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor al obtener las reservas'
-            });
+            next(error);
         }
     }
 
-    async findOne(req, res) {
+    async findOne(req, res, next) {
         try {
             const id = parseInt(req.params.id);
+            if (isNaN(id)) throw { status: 400, message: 'ID de reserva inválido' };
 
-            if (isNaN(id)) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'ID de reserva inválido'
-                });
-            }
-
-            const reserva = await reservaService.getReservaById(id);
-
+            const reserva = await this.reservaService.getReservaById(id);
             res.json({
                 success: true,
                 message: 'Reserva obtenida exitosamente',
                 data: reserva
             });
         } catch (error) {
-            console.error('Error al obtener reserva:', error);
-
-            if (error.name === 'NotFoundError') {
-                return res.status(404).json({
-                    success: false,
-                    message: error.message
-                });
-            }
-
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor al obtener la reserva'
-            });
+            next(error);
         }
     }
 
-    async getByInquilino(req, res) {
+    async getByInquilino(req, res, next) {
         try {
             const inquilinoId = parseInt(req.params.inquilinoId);
+            if (isNaN(inquilinoId)) throw { status: 400, message: 'ID de inquilino inválido' };
 
-            if (isNaN(inquilinoId)) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'ID de inquilino inválido'
-                });
-            }
-
-            const reservas = await reservaService.getReservasByInquilino(inquilinoId);
-
+            const reservas = await this.reservaService.getReservasByInquilino(inquilinoId);
             res.json({
                 success: true,
                 message: 'Reservas del inquilino obtenidas exitosamente',
@@ -103,35 +61,16 @@ export class ReservaController {
                 data: reservas
             });
         } catch (error) {
-            console.error('Error al obtener reservas del inquilino:', error);
-
-            if (error.name === 'NotFoundError') {
-                return res.status(404).json({
-                    success: false,
-                    message: error.message
-                });
-            }
-
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor al obtener las reservas del inquilino'
-            });
+            next(error);
         }
     }
 
-    async getByPropiedad(req, res) {
+    async getByPropiedad(req, res, next) {
         try {
             const propiedadId = parseInt(req.params.propiedadId);
+            if (isNaN(propiedadId)) throw { status: 400, message: 'ID de propiedad inválido' };
 
-            if (isNaN(propiedadId)) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'ID de propiedad inválido'
-                });
-            }
-
-            const reservas = await reservaService.getReservasByPropiedad(propiedadId);
-
+            const reservas = await this.reservaService.getReservasByPropiedad(propiedadId);
             res.json({
                 success: true,
                 message: 'Reservas de la propiedad obtenidas exitosamente',
@@ -139,35 +78,16 @@ export class ReservaController {
                 data: reservas
             });
         } catch (error) {
-            console.error('Error al obtener reservas de la propiedad:', error);
-
-            if (error.name === 'NotFoundError') {
-                return res.status(404).json({
-                    success: false,
-                    message: error.message
-                });
-            }
-
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor al obtener las reservas de la propiedad'
-            });
+            next(error);
         }
     }
 
-    async getByPropietario(req, res) {
+    async getByPropietario(req, res, next) {
         try {
             const propietarioId = parseInt(req.params.propietarioId);
+            if (isNaN(propietarioId)) throw { status: 400, message: 'ID de propietario inválido' };
 
-            if (isNaN(propietarioId)) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'ID de propietario inválido'
-                });
-            }
-
-            const reservas = await reservaService.getReservasByPropietario(propietarioId);
-
+            const reservas = await this.reservaService.getReservasByPropietario(propietarioId);
             res.json({
                 success: true,
                 message: 'Reservas del propietario obtenidas exitosamente',
@@ -175,121 +95,53 @@ export class ReservaController {
                 data: reservas
             });
         } catch (error) {
-            console.error('Error al obtener reservas del propietario:', error);
-
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor al obtener las reservas del propietario'
-            });
+            next(error);
         }
     }
 
-    async update(req, res) {
+    async update(req, res, next) {
         try {
             const id = parseInt(req.params.id);
+            if (isNaN(id)) throw { status: 400, message: 'ID de reserva inválido' };
 
-            if (isNaN(id)) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'ID de reserva inválido'
-                });
-            }
-
-            const updatedReserva = await reservaService.updateReserva(id, req.body);
-
+            const updatedReserva = await this.reservaService.updateReserva(id, req.body);
             res.json({
                 success: true,
                 message: 'Reserva actualizada exitosamente',
                 data: updatedReserva
             });
         } catch (error) {
-            console.error('Error al actualizar reserva:', error);
-
-            if (error.name === 'NotFoundError') {
-                return res.status(404).json({
-                    success: false,
-                    message: error.message
-                });
-            }
-
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor al actualizar la reserva'
-            });
+            next(error);
         }
     }
 
-    async remove(req, res) {
+    async remove(req, res, next) {
         try {
             const id = parseInt(req.params.id);
+            if (isNaN(id)) throw { status: 400, message: 'ID de reserva inválido' };
 
-            if (isNaN(id)) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'ID de reserva inválido'
-                });
-            }
-
-            await reservaService.deleteReserva(id);
-
+            await this.reservaService.deleteReserva(id);
             res.status(204).send();
         } catch (error) {
-            console.error('Error al eliminar reserva:', error);
-
-            if (error.name === 'NotFoundError') {
-                return res.status(404).json({
-                    success: false,
-                    message: error.message
-                });
-            }
-
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor al eliminar la reserva'
-            });
+            next(error);
         }
     }
 
-    async cambiarEstado(req, res) {
+    async cambiarEstado(req, res, next) {
         try {
             const id = parseInt(req.params.id);
             const { estado } = req.body;
+            if (isNaN(id)) throw { status: 400, message: 'ID de reserva inválido' };
+            if (!estado) throw { status: 400, message: 'Estado requerido' };
 
-            if (isNaN(id)) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'ID de reserva inválido'
-                });
-            }
-
-            if (!estado) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'Estado requerido'
-                });
-            }
-
-            const updatedReserva = await reservaService.cambiarEstadoReserva(id, estado);
-
+            const updatedReserva = await this.reservaService.cambiarEstadoReserva(id, estado);
             res.json({
                 success: true,
                 message: `Estado de reserva cambiado a ${estado}`,
                 data: updatedReserva
             });
         } catch (error) {
-            console.error('Error al cambiar estado:', error);
-
-            if (error.name === 'NotFoundError') {
-                return res.status(404).json({
-                    success: false,
-                    message: error.message
-                });
-            }
-
-            res.status(500).json({
-                success: false,
-                message: 'Error interno del servidor al cambiar el estado'
-            });
+            next(error);
         }
     }
 }

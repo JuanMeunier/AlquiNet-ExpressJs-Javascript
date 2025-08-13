@@ -12,36 +12,48 @@ const reservaController = new ReservaController();
 reservaRouter.use(authenticate);
 
 // Crear reserva
-reservaRouter.post('/',
+reservaRouter.post(
+    '/',
     validateDto(createReservationDto),
-    (req, res) => reservaController.create(req, res)
+    (req, res, next) => reservaController.create(req, res, next)
 );
 
 // Obtener todas las reservas
-reservaRouter.get('/', (req, res) => reservaController.findAll(req, res));
+reservaRouter.get('/', (req, res, next) => reservaController.findAll(req, res, next));
 
 // Obtener reserva por ID
-reservaRouter.get('/:id', (req, res) => reservaController.findOne(req, res));
+reservaRouter.get('/:id', (req, res, next) => reservaController.findOne(req, res, next));
 
 // Obtener reservas por inquilino
-reservaRouter.get('/inquilino/:inquilinoId', (req, res) => reservaController.getByInquilino(req, res));
+reservaRouter.get('/inquilino/:inquilinoId', (req, res, next) =>
+    reservaController.getByInquilino(req, res, next)
+);
 
 // Obtener reservas por propiedad
-reservaRouter.get('/propiedad/:propiedadId', (req, res) => reservaController.getByPropiedad(req, res));
+reservaRouter.get('/propiedad/:propiedadId', (req, res, next) =>
+    reservaController.getByPropiedad(req, res, next)
+);
 
 // Obtener reservas por propietario
-reservaRouter.get('/propietario/:propietarioId', (req, res) => reservaController.getByPropietario(req, res));
+reservaRouter.get('/propietario/:propietarioId', (req, res, next) =>
+    reservaController.getByPropietario(req, res, next)
+);
 
 // Actualizar reserva
-reservaRouter.put('/:id',
+reservaRouter.put(
+    '/:id',
     validateDto(updateReservationDto),
-    (req, res) => reservaController.update(req, res)
+    (req, res, next) => reservaController.update(req, res, next)
 );
 
 // Cambiar estado de reserva
-reservaRouter.patch('/:id/estado', (req, res) => reservaController.cambiarEstado(req, res));
+reservaRouter.patch('/:id/estado', (req, res, next) =>
+    reservaController.cambiarEstado(req, res, next)
+);
 
 // Eliminar reserva
-reservaRouter.delete('/:id', (req, res) => reservaController.remove(req, res));
+reservaRouter.delete('/:id', (req, res, next) =>
+    reservaController.remove(req, res, next)
+);
 
 export default reservaRouter;

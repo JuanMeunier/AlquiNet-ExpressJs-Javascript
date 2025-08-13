@@ -1,81 +1,73 @@
-import { PropiedadService } from "../services/propiedadServices";
-
-const propiedadService = new PropiedadService();
+import { PropiedadService } from "../services/propiedadServices.js";
 
 export class PropiedadController {
-    async create(req, res) {
+    constructor() {
+        this.propiedadService = new PropiedadService();
+    }
+
+    async create(req, res, next) {
         try {
-            const propiedad = await propiedadService.createPropiedad(req.body);
+            const propiedad = await this.propiedadService.createPropiedad(req.body);
             res.status(201).json(propiedad);
         } catch (error) {
-            console.error(error);
-            res.status(500).json({ message: 'Error al crear la propiedad' });
+            next(error);
         }
     }
 
-    async findAll(req, res) {
+    async findAll(req, res, next) {
         try {
-            const propiedades = await propiedadService.getPropiedades();
+            const propiedades = await this.propiedadService.getPropiedades();
             res.json(propiedades);
         } catch (error) {
-            res.status(500).json({ message: 'Error al obtener las propiedades' });
+            next(error);
         }
     }
 
-    async findOne(req, res) {
+    async findOne(req, res, next) {
         try {
-            const propiedad = await propiedadService.getPropiedadById(parseInt(req.params.id));
+            const propiedad = await this.propiedadService.getPropiedadById(parseInt(req.params.id));
             res.json(propiedad);
         } catch (error) {
-            if (error.name === 'NotFoundError') {
-                return res.status(404).json({ message: error.message });
-            }
-            res.status(500).json({ message: 'Error al obtener la propiedad' });
+            next(error);
         }
     }
 
-    async findByUbicacion(req, res) {
+    async findByUbicacion(req, res, next) {
         try {
-            const propiedades = await propiedadService.getPropiedadByUbicacion(req.query.ubicacion);
+            const propiedades = await this.propiedadService.getPropiedadByUbicacion(req.query.ubicacion);
             res.json(propiedades);
         } catch (error) {
-            res.status(500).json({ message: 'Error al buscar propiedades por ubicación' });
+            next(error);
         }
     }
 
-    async getByUserId(req, res) {
+    async getByUserId(req, res, next) {
         try {
-            const propiedades = await propiedadService.getPropiedadesByUserId(parseInt(req.params.userId));
+            const propiedades = await this.propiedadService.getPropiedadesByUserId(parseInt(req.params.userId));
             res.json(propiedades);
         } catch (error) {
-            if (error.name === 'NotFoundError') {
-                return res.status(404).json({ message: error.message });
-            }
-            res.status(500).json({ message: 'Error al obtener las propiedades del usuario' });
+            next(error);
         }
     }
 
-    async update(req, res) {
+    async update(req, res, next) {
         try {
-            const updatedPropiedad = await propiedadService.updatePropiedad(parseInt(req.params.id), req.body);
+            const updatedPropiedad = await this.propiedadService.updatePropiedad(
+                parseInt(req.params.id),
+                req.body
+            );
             res.json(updatedPropiedad);
         } catch (error) {
-            if (error.name === 'NotFoundError') {
-                return res.status(404).json({ message: error.message });
-            }
-            res.status(500).json({ message: 'Error al actualizar la propiedad' });
+            next(error);
         }
     }
 
-    async remove(req, res) {
+    async remove(req, res, next) {
         try {
-            await propiedadService.deletePropiedad(parseInt(req.params.id));
+            await this.propiedadService.deletePropiedad(parseInt(req.params.id));
             res.status(204).send();
         } catch (error) {
-            if (error.name === 'NotFoundError') {
-                return res.status(404).json({ message: error.message });
-            }
-            res.status(500).json({ message: 'Error al eliminar la propiedad' });
+            next(error);
         }
     }
 }

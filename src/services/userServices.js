@@ -1,10 +1,10 @@
 import { AppDataSource } from '../config/database.js';
-import { User } from '../entities/User.js';
+import { Usuario } from '../entities/usuario.js';
 import bcrypt from 'bcrypt';
 
 export class UserService {
   constructor() {
-    this.userRepository = AppDataSource.getRepository(User);
+    this.userRepository = AppDataSource.getRepository(Usuario);
   }
 
   async createUser(data) {

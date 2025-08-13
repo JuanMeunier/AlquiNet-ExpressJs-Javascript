@@ -1,6 +1,6 @@
 import AppDataSource from '../config/database.js';
-import { Propiedad } from '../entities/Propiedad.js';
-import { User } from '../entities/User.js';
+import { Propiedad } from '../entities/propiedad.js';
+import { User } from '../entities/usuario.js';
 import { NotFoundError } from '../errors/NotFoundError.js';
 
 export class PropiedadService {
