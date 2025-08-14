@@ -2,8 +2,8 @@ import { Router } from 'express';
 import { ReservaController } from '../controllers/reservaController.js';
 import { validateDto } from '../middlewares/validateDto.js';
 import { authenticate } from '../middlewares/auth.middleware.js';
-import { createReservationDto } from '../dtos/resenia/createResenia.dto.js';
-import { updateReservationDto } from '../dtos/resenia/updateResenia.dto.js';
+import { createReservationDto } from '../dtos/reserva/createReserva.dto.js';
+import { updateReservationDto } from '../dtos/reserva/updateReserva.dto.js';
 
 const reservaRouter = Router();
 const reservaController = new ReservaController();

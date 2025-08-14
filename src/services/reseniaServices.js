@@ -1,8 +1,8 @@
-import AppDataSource from '../config/database.js';
+import { AppDataSource } from '../config/database.js';
 import Propiedad from '../entities/propiedad.js';
 import Usuario from '../entities/usuario.js';
 import Resenia from '../entities/resenia.js';
-import { NotFoundError } from '../errors/NotFoundError.js'
+
 
 export class ReseniaService {
   constructor() {
@@ -14,11 +14,11 @@ export class ReseniaService {
   async createResenia({ inquilinoId, propiedadId, comentario, puntaje }) {
     // Verificar existencia del inquilino
     const inquilino = await this.usuarioRepository.findOne({ where: { id: inquilinoId } });
-    if (!inquilino) throw new NotFoundError(`Usuario (inquilino) con id ${inquilinoId} no encontrado`);
+    if (!inquilino) throw new Error(`Usuario (inquilino) con id ${inquilinoId} no encontrado`);
 
     // Verificar existencia de la propiedad
     const propiedad = await this.propiedadRepository.findOne({ where: { id: propiedadId } });
-    if (!propiedad) throw new NotFoundError(`Propiedad con id ${propiedadId} no encontrada`);
+    if (!propiedad) throw new Error(`Propiedad con id ${propiedadId} no encontrada`);
 
     // Evitar reseña duplicada
     const reseñaExistente = await this.reseniaRepository.findOne({
@@ -49,7 +49,7 @@ export class ReseniaService {
   /** Obtener reseñas de una propiedad específica */
   async getReseniasPorPropiedad(propiedadId) {
     const propiedad = await this.propiedadRepository.findOne({ where: { id: propiedadId } });
-    if (!propiedad) throw new NotFoundError(`Propiedad con id ${propiedadId} no encontrada`);
+    if (!propiedad) throw new Error(`Propiedad con id ${propiedadId} no encontrada`);
 
     return await this.reseniaRepository.find({
       where: { propiedad: { id: propiedadId } },
@@ -61,7 +61,7 @@ export class ReseniaService {
   /** Obtener reseñas de un inquilino específico */
   async getReseniasPorInquilino(inquilinoId) {
     const inquilino = await this.usuarioRepository.findOne({ where: { id: inquilinoId } });
-    if (!inquilino) throw new NotFoundError(`Usuario (inquilino) con id ${inquilinoId} no encontrado`);
+    if (!inquilino) throw new Error(`Usuario (inquilino) con id ${inquilinoId} no encontrado`);
 
     return await this.reseniaRepository.find({
       where: { inquilino: { id: inquilinoId } },
@@ -76,14 +76,14 @@ export class ReseniaService {
       where: { id: reseniaId },
       relations: ['inquilino', 'propiedad']
     });
-    if (!resenia) throw new NotFoundError(`Reseña con id ${reseniaId} no encontrada`);
+    if (!resenia) throw new Error(`Reseña con id ${reseniaId} no encontrada`);
     return resenia;
   }
 
   /** Actualizar reseña */
   async updateResenia(reseniaId, { comentario, puntaje }) {
     const resenia = await this.reseniaRepository.findOne({ where: { id: reseniaId } });
-    if (!resenia) throw new NotFoundError(`Reseña con id ${reseniaId} no encontrada`);
+    if (!resenia) throw new Error(`Reseña con id ${reseniaId} no encontrada`);
 
     if (comentario !== undefined) resenia.comentario = comentario;
     if (puntaje !== undefined) resenia.puntaje = puntaje;
@@ -94,7 +94,7 @@ export class ReseniaService {
   /** Eliminar reseña */
   async deleteResenia(reseniaId) {
     const resenia = await this.reseniaRepository.findOne({ where: { id: reseniaId } });
-    if (!resenia) throw new NotFoundError(`Reseña con id ${reseniaId} no encontrada`);
+    if (!resenia) throw new Error(`Reseña con id ${reseniaId} no encontrada`);
 
     return await this.reseniaRepository.remove(resenia);
   }

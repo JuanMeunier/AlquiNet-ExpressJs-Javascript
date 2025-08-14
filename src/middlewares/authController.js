@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import Usuario from '../entities/usuario.js' // tu EntitySchema
-import AppDataSource from "../config/database.js"; // tu instancia de DataSource
+import Usuario from '../entities/usuario.js';
+import { AppDataSource } from "../config/database.js";
 
 const usuarioRepository = AppDataSource.getRepository(Usuario);
 

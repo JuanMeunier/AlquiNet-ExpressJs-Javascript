@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/userController.js';
 import { validateDto } from '../middlewares/validateDto.js';
-import createUserDto from '../dtos/usuario/createUser.dto.js';
-import updateUserDto from '../dtos/usuario/updateUser.dto.js';
+import { createUserDto } from '../dtos/usuario/createUser.dto.js';
+import { updateUserDto } from '../dtos/usuario/updateUser.dto.js';
 
 const userRouter = Router();
 const userController = new UserController();

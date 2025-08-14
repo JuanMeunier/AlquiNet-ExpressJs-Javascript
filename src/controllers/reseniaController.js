@@ -1,4 +1,4 @@
-import { ReseniaService } from "../services/reseniaServices";
+import { ReseniaService } from "../services/reseniaServices.js";
 
 export class ReseniaController {
     constructor() {

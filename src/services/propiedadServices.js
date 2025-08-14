@@ -1,7 +1,6 @@
-import AppDataSource from '../config/database.js';
+import { AppDataSource } from '../config/database.js';
 import Propiedad from '../entities/propiedad.js';
 import Usuario from '../entities/usuario.js';
-import { NotFoundError } from '../errors/NotFoundError.js';
 
 export class PropiedadService {
     constructor() {
@@ -23,7 +22,7 @@ export class PropiedadService {
             where: { id },
             relations: ['usuario']
         });
-        if (!propiedad) throw new NotFoundError('Propiedad no encontrada');
+        if (!propiedad) throw { status: 404, message: 'Propiedad no encontrada' };
         return propiedad;
     }
 
@@ -40,7 +39,7 @@ export class PropiedadService {
             where: { id: userId },
             relations: ['propiedades']
         });
-        if (!user) throw new NotFoundError('Usuario no encontrado');
+        if (!user) throw { status: 404, message: 'Usuario no encontrada' };
         return user.propiedades;
     }
 
@@ -51,6 +50,6 @@ export class PropiedadService {
 
     async deletePropiedad(id) {
         const result = await this.propiedadRepository.delete(id);
-        if (result.affected === 0) throw new NotFoundError('Propiedad no encontrada');
+        if (result.affected === 0) throw { status: 404, message: 'Propiedad no encontrada' };
     }
 }

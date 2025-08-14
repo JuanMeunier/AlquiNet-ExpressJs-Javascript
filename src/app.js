@@ -14,7 +14,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Rutas
-app.use('/', router);
 app.use('/users', userRouter);
 app.use('/api/propiedades', propiedadRouter);
 app.use('/api/reservas', reservaRouter);

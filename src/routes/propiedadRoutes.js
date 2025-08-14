@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { PropiedadController } from "../controllers/propiedadController.js";
 import { validateDto } from '../middlewares/validateDto.js';
-import createPropiedadDto from '../dtos/propiedad/createPropiedad.dto.js';
-import updatePropiedadDto from '../dtos/propiedad/updatePropiedad.dto.js';
+import { createPropertyDto } from '../dtos/propiedad/createPropiedad.dto.js';
+import { updatePropertyDto } from '../dtos/propiedad/updatePropiedad.dto.js';
 
 const propiedadRouter = Router();
 const propiedadController = new PropiedadController();
@@ -10,7 +10,7 @@ const propiedadController = new PropiedadController();
 // Crear propiedad
 propiedadRouter.post(
     '/',
-    validateDto(createPropiedadDto),
+    validateDto(createPropertyDto),
     (req, res, next) => propiedadController.create(req, res, next)
 );
 
@@ -41,7 +41,7 @@ propiedadRouter.get(
 // Actualizar propiedad
 propiedadRouter.put(
     '/:id',
-    validateDto(updatePropiedadDto),
+    validateDto(updatePropertyDto),
     (req, res, next) => propiedadController.update(req, res, next)
 );
 
