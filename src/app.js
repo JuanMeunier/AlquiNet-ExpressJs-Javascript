@@ -4,6 +4,8 @@ import propiedadRouter from './routes/propiedadRoutes.js';
 import reservaRouter from './routes/reservaRoutes.js';
 import reseniaRouter from './routes/reseniaRoutes.js';
 import authRoutes from './middlewares/authRoutes.js';
+import { specs, swaggerUi } from './config/swagger.js';
+
 
 
 const app = express();
@@ -12,6 +14,31 @@ const app = express();
 // Middlewares globales
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Swagger Doc
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'AlquiNet API Documentation',
+    customfavIcon: '/favicon.ico'
+}));
+
+// Ruta de bienvenida
+app.get('/', (req, res) => {
+    res.json({
+        message: 'Bienvenido a AlquiNet API',
+        version: '1.0.0',
+        documentation: '/api-docs',
+        endpoints: {
+            auth: '/auth',
+            users: '/users',
+            propiedades: '/api/propiedades',
+            reservas: '/api/reservas',
+            resenias: '/api/resenias'
+        }
+    });
+});
+
+
 
 // Rutas
 app.use('/users', userRouter);
