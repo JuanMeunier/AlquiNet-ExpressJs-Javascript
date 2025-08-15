@@ -53,7 +53,7 @@ export default new EntitySchema({
     },
     reseñas: {
       type: "one-to-many",
-      target: "Reseña",
+      target: "Resenia",
       inverseSide: "propiedad"
     }
   }
