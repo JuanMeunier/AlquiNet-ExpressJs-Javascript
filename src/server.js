@@ -17,6 +17,7 @@ async function main() {
             console.log('\n🚀 Servidor AlquiNet iniciado exitosamente!');
             console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
             console.log(`📍 URL del servidor: http://${HOST}:${PORT}`);
+            console.log(`📚 Documentación API: http://${HOST}:${PORT}/api-docs`);
             console.log(`🌐 Ambiente: ${process.env.NODE_ENV || 'development'}`);
             console.log(`📊 Base de datos: ${process.env.DB_NAME} (${process.env.DB_HOST}:${process.env.DB_PORT})`);
             console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
