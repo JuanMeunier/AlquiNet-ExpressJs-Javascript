@@ -3,9 +3,12 @@ import { PropiedadController } from "../controllers/propiedadController.js";
 import { validateDto } from '../middlewares/validateDto.js';
 import { createPropertyDto } from '../dtos/propiedad/createPropiedad.dto.js';
 import { updatePropertyDto } from '../dtos/propiedad/updatePropiedad.dto.js';
+import { authorizeRoles, authenticate } from "../middlewares/auth.middleware.js";
 
 const propiedadRouter = Router();
 const propiedadController = new PropiedadController();
+
+propiedadRouter.use(authenticate);
 
 /**
  * @swagger
@@ -88,6 +91,7 @@ const propiedadController = new PropiedadController();
 propiedadRouter.post(
     '/',
     validateDto(createPropertyDto),
+    authorizeRoles('propietario'),
     (req, res, next) => propiedadController.create(req, res, next)
 );
 
@@ -283,6 +287,7 @@ propiedadRouter.get(
 propiedadRouter.put(
     '/:id',
     validateDto(updatePropertyDto),
+    authorizeRoles('propietario', 'admin'),
     (req, res, next) => propiedadController.update(req, res, next)
 );
 
@@ -311,6 +316,7 @@ propiedadRouter.put(
  */
 propiedadRouter.delete(
     '/:id',
+    authorizeRoles('propietario', 'admin'),
     (req, res, next) => propiedadController.remove(req, res, next)
 );
 

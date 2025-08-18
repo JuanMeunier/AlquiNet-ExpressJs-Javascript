@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { ReseniaController } from '../controllers/reseniaController.js';
-import { authenticate } from '../middlewares/auth.middleware.js';
+import { authenticate, authorizeRoles } from '../middlewares/auth.middleware.js';
 import { validateDto } from '../middlewares/validateDto.js';
 import { createReseniaDto } from '../dtos/resenia/createResenia.dto.js';
 import { updateReseniaDto } from '../dtos/resenia/updateResenia.dto.js';
@@ -63,7 +63,7 @@ router.use(authenticate);
  *       500:
  *         description: Error interno del servidor
  */
-router.post('/', validateDto(createReseniaDto), (req, res, next) => reseniaController.createResenia(req, res, next));
+router.post('/', validateDto(createReseniaDto), authorizeRoles('inqulino'), (req, res, next) => reseniaController.createResenia(req, res, next));
 
 /**
  * @swagger

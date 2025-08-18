@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { ReservaController } from '../controllers/reservaController.js';
 import { validateDto } from '../middlewares/validateDto.js';
-import { authenticate } from '../middlewares/auth.middleware.js';
+import { authenticate, authorizeRoles } from '../middlewares/auth.middleware.js';
 import { createReservationDto } from '../dtos/reserva/createReserva.dto.js';
 import { updateReservationDto } from '../dtos/reserva/updateReserva.dto.js';
 
@@ -68,6 +68,7 @@ reservaRouter.use(authenticate);
 reservaRouter.post(
     '/',
     validateDto(createReservationDto),
+    authorizeRoles('inquilino'),
     (req, res, next) => reservaController.create(req, res, next)
 );
 
@@ -291,6 +292,7 @@ reservaRouter.get('/propietario/:propietarioId', (req, res, next) =>
 reservaRouter.put(
     '/:id',
     validateDto(updateReservationDto),
+    authorizeRoles('inquilino'),
     (req, res, next) => reservaController.update(req, res, next)
 );
 
@@ -373,7 +375,7 @@ reservaRouter.patch('/:id/estado', (req, res, next) =>
  *       500:
  *         description: Error interno del servidor
  */
-reservaRouter.delete('/:id', (req, res, next) =>
+reservaRouter.delete('/:id', authorizeRoles('inquilino'), (req, res, next) =>
     reservaController.remove(req, res, next)
 );
 

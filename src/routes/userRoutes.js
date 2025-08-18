@@ -3,6 +3,8 @@ import { UserController } from '../controllers/userController.js';
 import { validateDto } from '../middlewares/validateDto.js';
 import { createUserDto } from '../dtos/usuario/createUser.dto.js';
 import { updateUserDto } from '../dtos/usuario/updateUser.dto.js';
+import { authorizeRoles, authenticate } from '../middlewares/auth.middleware.js';
+
 
 const userRouter = Router();
 const userController = new UserController();
@@ -82,7 +84,7 @@ userRouter.post('/', validateDto(createUserDto), (req, res) => userController.cr
  *       500:
  *         description: Error interno del servidor
  */
-userRouter.get('/', (req, res) => userController.findAll(req, res));
+userRouter.get('/', authorizeRoles('admin'), (req, res) => userController.findAll(req, res));
 
 /**
  * @swagger
@@ -111,7 +113,7 @@ userRouter.get('/', (req, res) => userController.findAll(req, res));
  *       500:
  *         description: Error interno del servidor
  */
-userRouter.get('/:id', (req, res) => userController.findOne(req, res));
+userRouter.get('/:id', authorizeRoles('admin'), (req, res) => userController.findOne(req, res));
 
 /**
  * @swagger
@@ -142,7 +144,7 @@ userRouter.get('/:id', (req, res) => userController.findOne(req, res));
  *       500:
  *         description: Error interno del servidor
  */
-userRouter.get('/:id/propiedades', (req, res) => userController.getPropiedadesByUserId(req, res));
+userRouter.get('/:id/propiedades', authorizeRoles('admin'), (req, res) => userController.getPropiedadesByUserId(req, res));
 
 /**
  * @swagger
@@ -221,6 +223,6 @@ userRouter.put('/:id', validateDto(updateUserDto), (req, res) => userController.
  *       500:
  *         description: Error interno del servidor
  */
-userRouter.delete('/:id', (req, res) => userController.remove(req, res));
+userRouter.delete('/:id', authorizeRoles('admin'), (req, res) => userController.remove(req, res));
 
 export default userRouter;
