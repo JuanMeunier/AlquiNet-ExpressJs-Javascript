@@ -1,46 +1,27 @@
-// src/config/redis.js
 import { createClient } from 'redis';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Crear el cliente de Redis
-const client = createClient({
-    // Configuración básica - Redis en localhost por defecto
-    host: process.env.REDIS_HOST || 'localhost',
-    port: process.env.REDIS_PORT || 6379,
+export const client = createClient({
+    url: process.env.REDIS_URL || 'redis://localhost:6379', // URL por defecto para Docker local
 });
 
-// Manejar errores
-client.on('error', (err) => {
-    console.error('❌ Redis Error:', err);
-});
+client.on('error', (err) => console.error('❌ Redis Error:', err));
+client.on('connect', () => console.log('🔄 Conectando a Redis...'));
+client.on('ready', () => console.log('✅ Redis conectado y listo'));
 
-// Cuando se conecta
-client.on('connect', () => {
-    console.log('🔄 Conectando a Redis...');
-});
-
-// Cuando está listo para usar
-client.on('ready', () => {
-    console.log('✅ Redis conectado y listo');
-});
-
-// Función para conectar Redis
-async function connectRedis() {
+export async function isRedisConnected() {
     try {
         await client.connect();
         console.log('📦 Redis conectado exitosamente');
+
+        // Prueba de escritura/lectura
+        await client.set('saludo', 'Hola desde Redis Docker');
+        const value = await client.get('saludo');
+        console.log('📌 Valor desde Redis:', value);
+
     } catch (error) {
         console.error('❌ Error conectando Redis:', error.message);
-        console.log('⚠️ El sistema funcionará sin cache');
     }
 }
-
-// Función para verificar si Redis está disponible
-function isRedisConnected() {
-    return client.isReady;
-}
-
-// Exportar el cliente y las funciones
-export { client, connectRedis, isRedisConnected };

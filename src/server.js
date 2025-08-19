@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import app from './app.js';
 import { AppDataSource } from './config/database.js';
-import { connectRedis } from './config/reddis.js';
+import { isRedisConnected } from './config/reddis.js';
 
 async function main() {
     try {
@@ -10,7 +10,7 @@ async function main() {
         console.log('✅ Base de datos conectada exitosamente');
 
         // Conectar a Redis (si está disponible)
-        await connectRedis();
+        await isRedisConnected();
 
         // Obtener puerto de las variables de entorno o usar 3000 por defecto
         const PORT = process.env.PORT || 3000;
