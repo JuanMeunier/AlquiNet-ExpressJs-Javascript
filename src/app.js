@@ -5,6 +5,7 @@ import reservaRouter from './routes/reservaRoutes.js';
 import reseniaRouter from './routes/reseniaRoutes.js';
 import authRoutes from './middlewares/authRoutes.js';
 import { specs, swaggerUi } from './config/swagger.js';
+import { generalLimiter, authLimiter } from './middlewares/rateLimiter.js';
 
 
 
@@ -21,6 +22,10 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {
     customSiteTitle: 'AlquiNet API Documentation',
     customfavIcon: '/favicon.ico'
 }));
+
+// Rate limiting global - aplicar a todas las rutas
+app.use(generalLimiter);// Rate limiting global - aplicar a todas las rutas
+
 
 // Ruta de bienvenida
 app.get('/', (req, res) => {
@@ -45,7 +50,7 @@ app.use('/users', userRouter);
 app.use('/api/propiedades', propiedadRouter);
 app.use('/api/reservas', reservaRouter);
 app.use('/api/resenias', reseniaRouter);
-app.use('/auth', authRoutes);
+app.use('/auth', authLimiter, authRoutes);
 
 // Middlewares de Errores Globales
 app.use((err, req, res, next) => {

@@ -1,5 +1,5 @@
 // src/middlewares/rateLimiter.js
-import { client, isRedisConnected } from '../config/redis.js';
+import { isRedisConnected, client } from "../config/reddis";
 
 /**
  * Crear un rate limiter simple
