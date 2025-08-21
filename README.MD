@@ -11,7 +11,6 @@ El sistema cuenta con:
 ⚡ Cache con Redis para optimizar consultas frecuentes.  
 📚 Documentación API con Swagger.  
 📝 Logs detallados de actividades y errores.  
-💓 Health checks para monitoreo del estado del sistema.  
 🧪 Testing unitario y end-to-end.
 
 ---
