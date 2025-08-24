@@ -1,5 +1,5 @@
 // tests/propiedadController.test.js
-import { PropiedadController } from "../controllers/propiedadController.js";
+import { PropiedadController } from "../../controllers/propiedadController.js";
 
 describe("PropiedadController", () => {
     let controller;

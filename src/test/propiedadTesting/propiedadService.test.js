@@ -1,8 +1,8 @@
 // tests/propiedadService.test.js
-import { PropiedadService } from "../services/propiedadServices.js";
-import cacheService from "../services/cacheServices.js";
-import Propiedad from "../entities/propiedad.js";
-import Usuario from "../entities/usuario.js";
+import { PropiedadService } from "../../services/propiedadServices.js";
+import cacheService from "../../services/cacheServices.js";
+import Propiedad from "../../entities/propiedad.js"
+import Usuario from "../../entities/usuario.js";
 
 // Mock repositories
 const mockRepository = () => ({
@@ -14,7 +14,7 @@ const mockRepository = () => ({
     delete: jest.fn(),
 });
 
-jest.mock("../config/database.js", () => ({
+jest.mock("../../config/database.js", () => ({
     AppDataSource: {
         getRepository: jest.fn(() => mockRepository()),
     },

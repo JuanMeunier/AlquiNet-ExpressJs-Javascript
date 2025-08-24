@@ -21,8 +21,7 @@ El sistema cuenta con:
 - 🏡 Publicación y edición de propiedades por parte de propietarios.  
 - 🔎 Búsqueda avanzada con filtros (ubicación, precio, tipo).  
 - 📅 Gestión de reservas y estado de las mismas.  
-- ⭐ Sistema de reseñas y puntuaciones para propiedades.  
-- 📊 Dashboard administrativo para gestión y monitoreo.  
+- ⭐ Sistema de reseñas y puntuaciones para propiedades.   
 - 🛠️ Cacheo de datos con Redis para mejorar rendimiento.  
 - 🔐 Protección de rutas 
 - 📖 Documentación interactiva y actualizada con Swagger UI.
